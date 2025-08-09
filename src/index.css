@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme{
+    --color-background: var(--background-color);
+    --color-foreground: var(--text-color);
+    --color-primary: var(--primary-color);
+    --color-secondary: var(--secondary-color);
+    --color-accent: var(--accent-color);
+    --color-input: var(--input-color);
+    --color-muted: var(--muted-text);
+    --color-border: var(--border-color);
+    --color-glass: var(--glass-background);
+}
+
+:root {
+    --primary-color: #272a49;
+    --secondary-color: #4dab5a;
+    --background-color: #fefefe;
+    --accent-color: #afb0c0;
+    --input-color: #f8f8f8;
+    --text-color: #152a4d;
+    --muted-text: #94959e;
+    --glass-background: rgba(255, 255, 255, 0.3);
+    --border-color: rgba(209, 213, 219, 0.3);
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.01),
+    inset 0 0 20px 10px rgba(255, 255, 255, 0.03);
+
+    color-scheme: light;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.dark {
+    --primary-color: #272a49;
+    --secondary-color: #6fdc8c;
+    --background-color: #222222;
+    --accent-color: #6a6d8a;
+    --input-color: #2e2e2e;
+    --text-color: #f1f1f4;
+    --muted-text: #666770;
+    --glass-background: rgba(17, 25, 40, 0.3);
+    --border-color: rgba(255, 255, 255, 0.125);
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.01),
+    inset 0 0 20px 10px rgba(255, 255, 255, 0.03);
+}
+
+.glass {
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(7px) saturate(150%);
+    background-color: var(--glass-background);
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-glass);
+}
+
+
+body {
+    @apply bg-background text-foreground shadow;
+}
+
+::-webkit-scrollbar {
+    @apply w-2 h-2 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-accent rounded-full;
+}
