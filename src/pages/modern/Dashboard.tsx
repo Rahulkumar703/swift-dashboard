@@ -122,10 +122,11 @@ const DashboardContent: FC<{ comments: CommentType[] }> = ({comments}) => {
 
             <DashboardFilterBar layout={layout} setLayout={setLayout}/>
             {
-                layout === 'grid' ? <GridLayout comments={comments}/> : <ListLayout comments={paginatedComments}>
-                    <Pagination {...{
-                        page, setPage, commentsPerPage, setCommentsPerPage, totalPages, start, end, totalItems
-                    }}/> </ListLayout>
+                layout === 'grid' ? <GridLayout comments={comments}/> :
+                    <ListLayout paginatedComments={paginatedComments}>
+                        <Pagination {...{
+                            page, setPage, commentsPerPage, setCommentsPerPage, totalPages, start, end, totalItems
+                        }}/> </ListLayout>
             }
 
         </PageWrapper>

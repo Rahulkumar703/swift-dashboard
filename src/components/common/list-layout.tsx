@@ -1,7 +1,11 @@
 import type {FC, ReactNode} from "react";
 import type {CommentType} from "../../types";
 
-export const ListLayout: FC<{ comments: CommentType[], children: ReactNode }> = ({comments, children}) => {
+export const ListLayout: FC<{ paginatedComments: CommentType[], children: ReactNode }> = ({
+                                                                                              paginatedComments,
+                                                                                              children
+                                                                                          }) => {
+
 
     return (
         <div className={'flex flex-col gap-10 flex-1'}>
@@ -16,7 +20,7 @@ export const ListLayout: FC<{ comments: CommentType[], children: ReactNode }> = 
                     </tr>
                     </thead>
                     <tbody>
-                    {comments.length ? comments.map((comment, index) => (
+                    {paginatedComments.length ? paginatedComments.map((comment, index) => (
                             <tr
                                 key={comment.id}
                                 className={`border-t border-accent/30 ${

@@ -108,7 +108,7 @@ const DashboardContent: FC<{ comments: CommentType[] }> = ({comments}) => {
     return (
         <PageWrapper className={'h-auto'}>
             <DashboardFilterBar/>
-            <ListLayout comments={paginatedComments}>
+            <ListLayout paginatedComments={paginatedComments}>
                 <Pagination  {...{
                     page, setPage, commentsPerPage, setCommentsPerPage, totalPages, start, end, totalItems
                 }} />
@@ -216,12 +216,12 @@ const DashboardFilterBar: FC = () => {
                         <span className="flex flex-col">
               <ChevronUp
                   className={`size-4 mt-0 ${
-                      sortBy.field === field && sortBy.order === 'desc' ? 'text-primary' : 'text-accent'
+                      sortBy.field === field && sortBy.order === 'asc' ? 'text-primary' : 'text-accent'
                   }`}
               />
               <ChevronDown
                   className={`size-4 -mt-1.5 ${
-                      sortBy.field === field && sortBy.order === 'asc' ? 'text-primary' : 'text-accent'
+                      sortBy.field === field && sortBy.order === 'desc' ? 'text-primary' : 'text-accent'
                   }`}
               />
             </span>

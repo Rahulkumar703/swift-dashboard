@@ -7,22 +7,31 @@ export const useFilteredComments = (comments: CommentType[]) => {
 
     const [page, setPage] = useState(0);
     const [commentsPerPage, setCommentsPerPage] = useState(10);
-    const [filteredComments, setFilteredComments] = useState<CommentType[]>([]);
+    const [paginatedComments, setPaginatedComments] = useState<CommentType[]>([]);
 
     const searchQuery = useMemo(() => searchParams.get('search')?.toLowerCase() || '', [searchParams]);
     const sortField = useMemo(() => searchParams.get('sort'), [searchParams]);
     const sortOrder = useMemo(() => searchParams.get('by') as 'asc' | 'desc' | null, [searchParams]);
 
-    useEffect(() => {
-        let filtered = comments.filter(comment => {
+    const filteredComments = useMemo(() => {
+        return comments.filter(comment => {
             const nameMatch = comment.name?.toLowerCase().includes(searchQuery);
             const emailMatch = comment.email?.toLowerCase().includes(searchQuery);
             const postIdMatch = comment.postId?.toString().includes(searchQuery);
             return nameMatch || emailMatch || postIdMatch;
         });
+    }, [comments, searchQuery]);
+
+    const totalItems = filteredComments.length;
+    const totalPages = Math.ceil(totalItems / commentsPerPage);
+    const start = page * commentsPerPage;
+    const end = Math.min(start + commentsPerPage, totalItems);
+
+    useEffect(() => {
+        const pageSlice = filteredComments.slice(start, end);
 
         if (sortField && sortOrder) {
-            filtered.sort((a, b) => {
+            pageSlice.sort((a, b) => {
                 const valA = a[sortField as keyof CommentType];
                 const valB = b[sortField as keyof CommentType];
                 if (valA == null || valB == null) return 0;
@@ -37,14 +46,12 @@ export const useFilteredComments = (comments: CommentType[]) => {
             });
         }
 
-        setFilteredComments(filtered);
-        setPage(0); // reset to first page on filter change
-    }, [comments, searchQuery, sortField, sortOrder]);
+        setPaginatedComments(pageSlice);
+    }, [filteredComments, start, end, sortField, sortOrder]);
 
-    const start = page * commentsPerPage;
-    const end = Math.min(start + commentsPerPage, filteredComments.length);
-    const totalPages = Math.ceil(filteredComments.length / commentsPerPage);
-    const paginatedComments = filteredComments.slice(start, end);
+    useEffect(() => {
+        setPage(0); // reset to first page on filter change
+    }, [searchQuery]);
 
     return {
         paginatedComments,
@@ -55,6 +62,6 @@ export const useFilteredComments = (comments: CommentType[]) => {
         totalPages,
         start,
         end,
-        totalItems: filteredComments.length,
+        totalItems,
     };
 };
