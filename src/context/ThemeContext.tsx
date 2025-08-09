@@ -25,7 +25,7 @@ const getInitialMode = (): 'light' | 'dark' => {
 };
 
 const getInitialTheme = (): 'legacy' | 'modern' => {
-    return (localStorage.getItem('theme') as 'legacy' | 'modern') ?? 'modern';
+    return (localStorage.getItem('theme') as 'legacy' | 'modern') ?? 'legacy';
 };
 
 export const ThemeProvider = ({children}: { children: ReactNode }) => {
